@@ -3,7 +3,7 @@ import pandas as pd
 import time
 import tqdm
 
-df = pd.read_excel('bsky_posts.xlsx')
+df = pd.read_excel('bsky_posts_labeled.xlsx')
 
 # data cleaning
 df = df[df['Text'].notna()]  # Remove rows where Text column has null/NA values
@@ -90,7 +90,7 @@ qwen_total_duration = []
 
 start_time = time.time() 
 
-for post in tqdm(df['Text'], desc='Processing posts...', unit='post'): # Iterate through each post
+for post in tqdm.tqdm(df['Text'], desc='Processing posts...', unit='post'): # Iterate through each post
     llama_response = llama_sentiment_analysis(post)
     qwen_response = qwen_sentiment_analysis(post)
 
@@ -104,7 +104,7 @@ for post in tqdm(df['Text'], desc='Processing posts...', unit='post'): # Iterate
 
 end_time = time.time() 
 total_duration = end_time - start_time # Calculate total duration of sentiment analysis
-print(f'Total duration: {total_duration} seconds') 
+print(f'\nTotal duration: {total_duration} seconds') 
 
 """Add sentiment analysis results to dataframe"""
 df['llama_sentiment'] = llama_sentiment
